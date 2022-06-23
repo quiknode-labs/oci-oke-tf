@@ -1,0 +1,31 @@
+[tool]
+[tool.poetry]
+name = "oci-oke-tf"
+version = "1.0.0"
+description = "A Terraform project for OCI OKE clusters"
+authors = ["Christo De Lange <christo@quiknode.io>"]
+license = "(c) 2022 QuickNode"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8.12,<3.11.0"
+
+[tool.poetry.dev-dependencies]
+pip = "~21.3.1"
+bump2version = "~1.0.1"
+ansible = "^5.9.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
