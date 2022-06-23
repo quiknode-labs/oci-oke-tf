@@ -5,14 +5,14 @@ resource "oci_core_vcn" "oke_vcn" {
   count          = var.use_existing_vcn ? 0 : 1
   cidr_block     = var.vcn_cidr
   compartment_id = var.compartment_ocid
-  display_name   = "oke_vcn"
+  display_name   = coalesce(var.vcn_display_name, "oke_vcn")
   defined_tags   = var.defined_tags
 }
 
 resource "oci_core_service_gateway" "oke_sg" {
   count          = var.use_existing_vcn ? 0 : 1
   compartment_id = var.compartment_ocid
-  display_name   = "oke_sg"
+  display_name   = coalesce(var.sg_display_name, "oke_sg")
   vcn_id         = oci_core_vcn.oke_vcn[0].id
   services {
     service_id = lookup(data.oci_core_services.AllOCIServices[0].services[0], "id")
@@ -23,7 +23,7 @@ resource "oci_core_service_gateway" "oke_sg" {
 resource "oci_core_nat_gateway" "oke_natgw" {
   count          = var.use_existing_vcn ? 0 : 1
   compartment_id = var.compartment_ocid
-  display_name   = "oke_natgw"
+  display_name   = coalesce(var.ngw_display_name, "oke_natgw")
   vcn_id         = oci_core_vcn.oke_vcn[0].id
   defined_tags   = var.defined_tags
 }
@@ -32,7 +32,7 @@ resource "oci_core_route_table" "oke_rt_via_natgw_and_sg" {
   count          = var.use_existing_vcn ? 0 : 1
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_vcn.oke_vcn[0].id
-  display_name   = "oke_rt_via_natgw"
+  display_name   = coalesce(var.ngw_rt_display_name, "oke_rt_via_natgw")
   defined_tags   = var.defined_tags
 
   route_rules {
@@ -51,7 +51,7 @@ resource "oci_core_route_table" "oke_rt_via_natgw_and_sg" {
 resource "oci_core_internet_gateway" "oke_igw" {
   count          = var.use_existing_vcn ? 0 : 1
   compartment_id = var.compartment_ocid
-  display_name   = "oke_igw"
+  display_name   = coalesce(var.igw_display_name, "oke_igw")
   vcn_id         = oci_core_vcn.oke_vcn[0].id
   defined_tags   = var.defined_tags
 }
@@ -60,7 +60,7 @@ resource "oci_core_route_table" "oke_rt_via_igw" {
   count          = var.use_existing_vcn ? 0 : 1
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_vcn.oke_vcn[0].id
-  display_name   = "oke_rt_via_igw"
+  display_name   = coalesce(var.igw_rt_display_name, "oke_rt_via_igw")
   defined_tags   = var.defined_tags
 
   route_rules {
@@ -73,7 +73,7 @@ resource "oci_core_route_table" "oke_rt_via_igw" {
 resource "oci_core_security_list" "oke_api_endpoint_subnet_sec_list" {
   count          = var.use_existing_vcn ? 0 : 1
   compartment_id = var.compartment_ocid
-  display_name   = "oke_api_endpoint_subnet_sec_list"
+  display_name   = coalesce(var.api_sn_sl_display_name, "oke_api_endpoint_subnet_sec_list")
   vcn_id         = oci_core_vcn.oke_vcn[0].id
   defined_tags   = var.defined_tags
 
@@ -152,7 +152,7 @@ resource "oci_core_security_list" "oke_api_endpoint_subnet_sec_list" {
 resource "oci_core_security_list" "oke_nodepool_subnet_sec_list" {
   count          = var.use_existing_vcn ? 0 : 1
   compartment_id = var.compartment_ocid
-  display_name   = "oke_nodepool_subnet_sec_list"
+  display_name   = coalesce(var.np_sn_sl_display_name, "oke_nodepool_subnet_sec_list")
   vcn_id         = oci_core_vcn.oke_vcn[0].id
   defined_tags   = var.defined_tags
 
@@ -243,7 +243,7 @@ resource "oci_core_subnet" "oke_api_endpoint_subnet" {
   cidr_block                 = var.api_endpoint_subnet_cidr
   compartment_id             = var.compartment_ocid
   vcn_id                     = oci_core_vcn.oke_vcn[0].id
-  display_name               = "oke_api_endpoint_subnet"
+  display_name               = coalesce(var.api_sn_display_name, "oke_api_endpoint_subnet")
   security_list_ids          = [oci_core_vcn.oke_vcn[0].default_security_list_id, oci_core_security_list.oke_api_endpoint_subnet_sec_list[0].id]
   route_table_id             = var.is_api_endpoint_subnet_public ? oci_core_route_table.oke_rt_via_igw[0].id : oci_core_route_table.oke_rt_via_natgw_and_sg[0].id
   prohibit_public_ip_on_vnic = var.is_api_endpoint_subnet_public ? false : true
@@ -255,7 +255,7 @@ resource "oci_core_subnet" "oke_lb_subnet" {
   cidr_block     = var.lb_subnet_cidr
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_vcn.oke_vcn[0].id
-  display_name   = "oke_lb_subnet"
+  display_name   = coalesce(var.lb_sn_display_name, "oke_lb_subnet")
 
   security_list_ids          = [oci_core_vcn.oke_vcn[0].default_security_list_id]
   route_table_id             = var.is_lb_subnet_public ? oci_core_route_table.oke_rt_via_igw[0].id : oci_core_route_table.oke_rt_via_natgw_and_sg[0].id
@@ -268,7 +268,7 @@ resource "oci_core_subnet" "oke_nodepool_subnet" {
   cidr_block     = var.nodepool_subnet_cidr
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_vcn.oke_vcn[0].id
-  display_name   = "oke_nodepool_subnet"
+  display_name   = coalesce(var.np_sn_display_name, "oke_nodepool_subnet")
 
   security_list_ids          = [oci_core_vcn.oke_vcn[0].default_security_list_id, oci_core_security_list.oke_nodepool_subnet_sec_list[0].id]
   route_table_id             = var.is_nodepool_subnet_public ? oci_core_route_table.oke_rt_via_igw[0].id : oci_core_route_table.oke_rt_via_natgw_and_sg[0].id

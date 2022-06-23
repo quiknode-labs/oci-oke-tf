@@ -21,6 +21,10 @@ variable "vcn_cidr" {
   default = "10.0.0.0/16"
 }
 
+variable "vcn_display_name" {
+  default = ""
+}
+
 variable "vcn_id" {
   default = ""
 }
@@ -143,4 +147,34 @@ variable "ssh_public_key" {
 
 variable "defined_tags" {
   default = {}
+}
+variable "lb_sn_display_name" {
+  default = ""
+}
+variable "np_sn_display_name" {
+  default = ""
+}
+variable "api_sn_display_name" {
+  default = ""
+}
+variable "np_sn_sl_display_name" {
+  default = ""
+}
+variable "api_sn_sl_display_name" {
+  default = ""
+}
+variable "igw_rt_display_name" {
+  default = ""
+}
+variable "igw_display_name" {
+  default = ""
+}
+variable "ngw_rt_display_name" {
+  default = ""
+}
+variable "ngw_display_name" {
+  default = ""
+}
+variable "sg_display_name" {
+  default = ""
 }
