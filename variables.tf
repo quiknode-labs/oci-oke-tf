@@ -178,3 +178,9 @@ variable "ngw_display_name" {
 variable "sg_display_name" {
   default = ""
 }
+variable "api_trusted_cidr" {
+  default = "0.0.0.0/0"
+}
+variable "nodepool_trusted_cidr" {
+  default = "0.0.0.0/0"
+}

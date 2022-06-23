@@ -129,7 +129,7 @@ resource "oci_core_security_list" "oke_api_endpoint_subnet_sec_list" {
 
   ingress_security_rules {
     protocol = "6"
-    source   = "0.0.0.0/0"
+    source   = var.api_trusted_cidr
 
     tcp_options {
       min = 6443
@@ -164,7 +164,7 @@ resource "oci_core_security_list" "oke_nodepool_subnet_sec_list" {
 
   egress_security_rules {
     protocol    = 1
-    destination = "0.0.0.0/0"
+    destination = var.nodepool_trusted_cidr
 
     icmp_options {
       type = 3
