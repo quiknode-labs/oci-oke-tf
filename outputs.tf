@@ -39,3 +39,7 @@ output "vcn_cidr" {
 output "lb_subnet_id" {
   value = oci_core_subnet.oke_lb_subnet[0].id
 }
+
+output "nodepool_subnet_id" {
+  value = oci_core_subnet.oke_nodepool_subnet[0].id
+}
