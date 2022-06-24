@@ -165,7 +165,7 @@ resource "oci_core_security_list" "oke_nodepool_subnet_sec_list" {
 
   egress_security_rules {
     protocol    = 1
-    destination = var.nodepool_trusted_cidr
+    destination = "0.0.0.0/0"
 
     icmp_options {
       type = 3
@@ -219,7 +219,7 @@ resource "oci_core_security_list" "oke_nodepool_subnet_sec_list" {
 
   ingress_security_rules {
     protocol = 1
-    source   = "0.0.0.0/0"
+    source   = var.nodepool_trusted_cidr
 
     icmp_options {
       type = 3
