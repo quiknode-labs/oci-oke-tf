@@ -29,11 +29,11 @@ output "KubeConfig" {
 }
 
 output "vcn_id" {
-  value = oci_core_vcn.oke_vcn.id
+  value = oci_core_vcn.oke_vcn[0].id
 }
 
 output "vcn_cidr" {
-  value = oci_core_vcn.oke_vcn.cidr_block
+  value = oci_core_vcn.oke_vcn[0].cidr_block
 }
 
 output "lb_subnet_id" {
