@@ -17,6 +17,10 @@ variable "use_existing_vcn" {
   default = true
 }
 
+variable "vcn_dns_label" {
+  default = "oke"
+}
+
 variable "vcn_cidr" {
   default = "10.0.0.0/16"
 }
@@ -29,6 +33,10 @@ variable "vcn_id" {
   default = ""
 }
 
+variable "nodepool_dns_label" {
+  default = "np"
+}
+
 variable "nodepool_subnet_id" {
   default = ""
 }
@@ -37,12 +45,20 @@ variable "nodepool_subnet_cidr" {
   default = "10.0.1.0/24"
 }
 
+variable "lb_dns_label" {
+  default = "lb"
+}
+
 variable "lb_subnet_id" {
   default = ""
 }
 
 variable "lb_subnet_cidr" {
   default = "10.0.2.0/24"
+}
+
+variable "api_dns_label" {
+  default = "api"
 }
 
 variable "api_endpoint_subnet_id" {
