@@ -28,6 +28,14 @@ output "KubeConfig" {
   value = data.oci_containerengine_cluster_kube_config.KubeConfig.content
 }
 
+output "vcn_id" {
+  value = oci_core_vcn.oke_vcn.id
+}
+
+output "vcn_cidr" {
+  value = oci_core_vcn.oke_vcn.cidr_block
+}
+
 output "lb_subnet_id" {
   value = oci_core_subnet.oke_lb_subnet.id
 }
