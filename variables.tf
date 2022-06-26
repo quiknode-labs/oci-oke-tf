@@ -118,11 +118,11 @@ variable "node_memory" {
 }
 
 variable "pods_cidr" {
-  default = "10.1.0.0/16"
+  default = "10.244.0.0/16"
 }
 
 variable "services_cidr" {
-  default = "10.2.0.0/16"
+  default = "10.96.0.0/16"
 }
 
 variable "node_linux_version" {
