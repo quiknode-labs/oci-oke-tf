@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "oci-oke-tf"
-version = "1.0.10"
+version = "1.0.11"
 description = "A Terraform project for OCI OKE clusters"
 authors = ["Christo De Lange <christo@quiknode.io>"]
 license = "(c) 2022 QuickNode"
