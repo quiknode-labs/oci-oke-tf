@@ -39,6 +39,10 @@ resource "oci_containerengine_cluster" "oci_oke_cluster" {
   defined_tags = var.defined_tags
 }
 
+data "oci_containerengine_node_pool_option" "oci_oke_node_pool_option" {
+  node_pool_option_id = oci_containerengine_cluster.oci_oke_cluster.id
+}
+
 resource "oci_containerengine_node_pool" "oci_oke_node_pool" {
   cluster_id         = oci_containerengine_cluster.oci_oke_cluster.id
   compartment_id     = var.compartment_ocid
