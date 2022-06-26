@@ -229,7 +229,7 @@ resource "oci_core_security_list" "oke_nodepool_subnet_sec_list" {
 
   ingress_security_rules {
     protocol = "6"
-    source   = "0.0.0.0/0"
+    source   = var.nodepool_trusted_cidr
 
     tcp_options {
       min = 22

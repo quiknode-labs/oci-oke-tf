@@ -43,3 +43,11 @@ output "lb_subnet_id" {
 output "nodepool_subnet_id" {
   value = oci_core_subnet.oke_nodepool_subnet[0].id
 }
+
+output "tls_key_pair" {
+  value = {
+    public_key_openssh = tls_private_key.public_private_key_pair.public_key_openssh,
+    private_key = tls_private_key.public_private_key_pair.private_key_pem,
+    public_key = tls_private_key.public_private_key_pair.public_key_pem,
+  }
+}
