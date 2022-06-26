@@ -5,10 +5,6 @@ data "oci_containerengine_cluster_option" "oci_oke_cluster_option" {
   cluster_option_id = "all"
 }
 
-data "oci_containerengine_node_pool_option" "oci_oke_node_pool_option" {
-  node_pool_option_id = "all"
-}
-
 data "oci_core_services" "AllOCIServices" {
   count = var.use_existing_vcn ? 0 : 1
   filter {
